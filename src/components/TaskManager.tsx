@@ -1,89 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { ProgressBar } from './ProgressBar';
+import { TaskForm } from './TaskForm';
+import { TaskFilters } from './TaskFilters';
+import { TaskItem } from './TaskItem';
+import { filterTasksByStatus, Task, generateUniqueId } from "../utils/utils";
 
-import TaskItem from "./TaskItem";
+interface TaskManagerProps {
+  date: number;
+  month: string;
+}
 
-const TaskManager = () => {
-  const [tasks, setTasks] = useState<any[]>([
-    { id: 1, title: "Buy groceries", completed: false },
-    { id: 2, title: "Clean the house", completed: true },
-  ]);
-  const [filter, setFilter] = useState("all");
-  const [newTask, setNewTask] = useState<string>();
+export const TaskManager: React.FC<TaskManagerProps> = ({ date, month }) => {
+  const [tasks, setTasks] = useLocalStorage<Task[]>('tasks', []);
+  const [filter, setFilter] = useState<"all" | "completed" | "pending">("all");
 
-  // Intentional bug: The filter conditions are reversed.
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === "completed") return task.completed === false;
-    if (filter === "pending") return task.completed === true;
-    return true;
-  });
-
-  const handleAddTask = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newTask!.trim() === "") return;
-    const newTaskObj = {
-      id: tasks.length + 1,
-      name: newTask,
+  const handleAddTask = (title: string) => {
+    const newTask: Task = {
+      id: generateUniqueId(),
+      title,
       completed: false,
     };
-    setTasks([...tasks, newTaskObj]);
-    setNewTask("");
+    setTasks(prev => [...prev, newTask]);
   };
 
-  // Intentional bug: Directly mutating the tasks array when deleting.
   const handleDeleteTask = (id: number) => {
-    const index = tasks.findIndex((task) => task.id === id);
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      setTasks(tasks);
-    }
+    setTasks(prev => prev.filter(task => task.id !== id));
   };
 
-  const toggleTaskCompletion = (id: number) => {
-    const task = tasks.find((task) => task.id === id);
-
-    task.isCompleted = !task.isCompleted;
+  const handleToggleTask = (id: number) => {
+    setTasks(prev => 
+      prev.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
+
+  const filteredTasks = filterTasksByStatus(tasks, filter);
+  const completedTasks = tasks.filter(task => task.completed).length;
 
   return (
-    <div className="container mx-auto bg-white p-4 rounded shadow">
-      <form onSubmit={handleAddTask} className="mb-4 flex">
-        <input
-          type="text"
-          placeholder="New task..."
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          className="flex-grow border rounded-l py-2 px-3"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 rounded-r">
-          Add
-        </button>
-      </form>
-      <div className="flex justify-around mb-4">
-        <button onClick={() => setFilter("all")} className="text-gray-700">
-          All
-        </button>
-        <button
-          onClick={() => setFilter("completed")}
-          className="text-gray-700"
-        >
-          Completed
-        </button>
-        <button onClick={() => setFilter("pending")} className="text-gray-700">
-          Pending
-        </button>
-      </div>
-      <ul>
-        {filteredTasks.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            onDelete={handleDeleteTask}
-            onToggle={toggleTaskCompletion}
-          />
-        ))}
-      </ul>
+    <div className="p-6">
+      <h2 className="text-xl font-medium text-white mb-4">{date} {month}</h2>
+      
+      <ProgressBar total={tasks.length} completed={completedTasks} />
+      <TaskForm onAddTask={handleAddTask} />
+      <TaskFilters currentFilter={filter} onFilterChange={setFilter} />
+
+      {filteredTasks.length > 0 ? (
+        <ul className="space-y-4">
+          {filteredTasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              onDelete={handleDeleteTask}
+              onToggle={handleToggleTask}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="text-center text-gray-500 mt-4">
+          No tasks to display.
+        </p>
+      )}
     </div>
   );
 };
-
-export default TaskManager;
