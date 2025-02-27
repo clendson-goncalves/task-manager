@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { ProgressBar } from './ProgressBar';
-import { TaskForm } from './TaskForm';
+import TaskForm from './TaskForm';
 import { TaskFilters } from './TaskFilters';
 import { TaskItem } from './TaskItem';
 import { filterTasksByStatus, Task, generateUniqueId } from "../utils/utils";

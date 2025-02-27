@@ -36,9 +36,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onToggle }) 
 
   return (
     <li ref={itemRef} className="flex items-center gap-3 py-2 px-2 group rounded-lg transition-colors hover:bg-gray-700/70 relative">
-      {/* Checkbox circle */}
+      {/* Checkbox */}
       <button
         onClick={() => onToggle(task.id)}
+        aria-label="toggle task"
         className={`w-4 h-4 rounded-full border transition-all ${
           task.completed 
             ? "border-green-500 bg-green-500" 

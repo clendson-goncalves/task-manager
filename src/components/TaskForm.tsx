@@ -4,18 +4,15 @@ interface TaskFormProps {
   onAddTask: (title: string) => void;
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
   const [task, setTask] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!task.trim()) return;
-    
-    setLoading(true);
-    await onAddTask(task.trim());
+
+    onAddTask(task.trim());
     setTask("");
-    setLoading(false);
   };
 
   return (
@@ -30,12 +27,13 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
         />
         <button
           type="submit"
-          disabled={loading}
           className="ml-2 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white hover:bg-teal-600 transition-all active:scale-95"
         >
-          {loading ? 'Adding...' : '+'}
+          +
         </button>
       </div>
     </form>
   );
-}; 
+};
+
+export default TaskForm; 
