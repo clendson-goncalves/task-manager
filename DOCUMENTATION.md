@@ -61,7 +61,7 @@ The following dependencies are used in the project:
 To install the dependencies, run the following command:
 
 ```bash
-pnpm install
+pnpm i
 ```
 
 ## Running Tests
@@ -74,8 +74,9 @@ pnpm test
 
 ## Conclusion
 
+Exercise completed successfully.
 If you need any additional information, feel free to ask.
-Thank you for your time and for considering me for this position.
+Thank you for considering me for the position.
 I'm excited about the opportunity to join the team and I'm looking forward to the next steps.
 
 Best regards,
