@@ -1,5 +1,4 @@
-# Documentation for Task Manager Application 
-## by Clendson Gonçalves
+# Documentation for Task Manager Application by Clendson Gonçalves
 
 ## Overview
 
