@@ -22,7 +22,7 @@ jobs:
           node-version: '20.18.3'
           
       - name: Install dependencies
-        run: pnpm install  
+        run: pnpm i  
 
       - name: Run tests
         run: pnpm test  
