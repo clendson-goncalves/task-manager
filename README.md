@@ -1,4 +1,4 @@
-# React Take-Home Challenge: Task Manager App
+Task Manager App
 
 ## Overview
 
