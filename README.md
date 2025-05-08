@@ -15,7 +15,7 @@ The following dependencies are used in the project:
 - **Jest**: A JavaScript testing framework used for running tests.
 - **@testing-library/jest-dom**: Provides custom matchers for asserting on DOM nodes.
 - **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
-- **npm**: A fast, disk space-efficient package manager.
+- **pnpm**: A fast, disk space-efficient package manager.
 
 ### Setup Instructions
 
@@ -29,13 +29,13 @@ The following dependencies are used in the project:
 2. **Install dependencies:**
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Start the development server:**
 
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 4. **View the app:**
@@ -47,7 +47,7 @@ The following dependencies are used in the project:
 To run the tests, use the following command:
 
 ```bash
-npm run test
+pnpm run test
 ```
 
 ## Application Functionality
