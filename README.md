@@ -1,4 +1,4 @@
-Task Manager App by Clendson Gonçalves
+#Task Manager App by Clendson Gonçalves
 
 ## Overview
 

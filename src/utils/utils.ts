@@ -1,11 +1,10 @@
-// Define Task type
 export interface Task {
     id: number;
     title: string;
     completed: boolean;
   }
   
-  // Helper function to filter tasks
+  // filter tasks
   export const filterTasksByStatus = (tasks: Task[], filter: string) => {
     switch (filter) {
       case 'completed':
@@ -17,7 +16,7 @@ export interface Task {
     }
   };
   
-  // Função para gerar um ID único baseado no timestamp e um número aleatório
+  // Create unique ID timestamp based
   export const generateUniqueId = () => {
     return Date.now() + Math.floor(Math.random() * 1000);
   };

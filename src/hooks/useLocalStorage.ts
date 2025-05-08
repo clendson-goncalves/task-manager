@@ -12,7 +12,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   });
 
-  // Atualizar localStorage quando o estado mudar
+  // localStorage update when state changes
   useEffect(() => {
     try {
       localStorage.setItem(key, JSON.stringify(storedValue));
